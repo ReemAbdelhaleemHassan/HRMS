@@ -1,43 +1,77 @@
 from django.contrib import admin
-from .models import Location, PersonalInformation, ContactInformation
+from .models import Department, Employee
 
-# Register your models here.class LocationAdmin(admin.ModelAdmin):
-class PersonalInformationAdmin(admin.ModelAdmin):
-    list_display = ('Name_in_Arabic', 'Name_in_English', 'display_location', 'section', 'department', 'marital_status', 'religion', 'national_id', 'expire_date', 'gender', 'date_of_birth', 'place_of_birth')
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('department', 'section', 'location')
+    list_filter = ('department', 'section', 'location')
+    search_fields = ('department', 'section', 'location')
+
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ('name_in_arabic', 'name_in_english', 'display_location', 'department', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'expire_date', 'gender', 'date_of_birth', 'place_of_birth')
+    list_filter = ('department__location', 'department__department', 'department__section', 'marital_status', 'religion', 'gender')
+    search_fields = ('name_in_arabic', 'name_in_english', 'department__department', 'department__section', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'place_of_birth')
 
     def display_location(self, obj):
-        return obj.location.location
+        return obj.department.location
     display_location.short_description = 'Location'
     
-    def section(self, obj):
-        return obj.location.section
     
-    def department(self, obj):
-        return obj.location.department
+class PersonalInformation(Employee):
+    class Meta:
+        proxy = True
 
-    section.short_description = 'Section'
-    department.short_description = 'Department'
+class PersonalInformationAdmin(admin.ModelAdmin):
+    list_display = ('name_in_arabic', 'name_in_english', 'display_location', 'department', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'expire_date', 'gender', 'date_of_birth', 'place_of_birth')
+    list_filter = ('department__location', 'department__department', 'department__section', 'marital_status', 'religion', 'gender')
+    search_fields = ('name_in_arabic', 'name_in_english', 'department__department', 'department__section', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'place_of_birth')
 
-    list_filter = ('location__section', 'location__department', 'marital_status', 'religion', 'gender')
-    search_fields = ('Name_in_Arabic', 'Name_in_English', 'location__section', 'location__department', 'marital_status', 'religion', 'national_id', 'place_of_birth')
-
+    def display_location(self, obj):
+        return obj.department.location
+    display_location.short_description = 'Location'
+    
+class ContactInformation(Employee):
+    class Meta:
+        proxy = True
 
 class ContactInformationAdmin(admin.ModelAdmin):
-    list_display = ('get_employee_name', 'email_address', 'address', 'work_phone', 'mobile_no')
-    # list_filter = ('employee__employee_name',)  # Filter by employee name
-    search_fields = ('employee__employee_name', 'email_address')  # Enable searching by employee name and email address
+    list_display = ('name_in_arabic', 'name_in_english', 'display_location', 'department', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'expire_date', 'gender', 'date_of_birth', 'place_of_birth')
+    list_filter = ('department__location', 'department__department', 'department__section', 'marital_status', 'religion', 'gender')
+    search_fields = ('name_in_arabic', 'name_in_english', 'department__department', 'department__section', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'place_of_birth')
 
-    def get_employee_name(self, obj):
-        return obj.employee.Name_in_English
-    get_employee_name.short_description = 'Employee Name'
+    def display_location(self, obj):
+        return obj.department.location
+    display_location.short_description = 'Location'
     
+
+class Education(Employee):
+    class Meta:
+        proxy = True
+
+class EducationAdmin(admin.ModelAdmin):
+    list_display = ('name_in_arabic', 'name_in_english', 'display_location', 'department', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'expire_date', 'gender', 'date_of_birth', 'place_of_birth')
+    list_filter = ('department__location', 'department__department', 'department__section', 'marital_status', 'religion', 'gender')
+    search_fields = ('name_in_arabic', 'name_in_english', 'department__department', 'department__section', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'place_of_birth')
+
+    def display_location(self, obj):
+        return obj.department.location
+    display_location.short_description = 'Location'
     
-class LocationAdmin(admin.ModelAdmin):
-    list_display = ('location', 'department', 'section')
-    list_filter = ('location', 'department', 'section')
-    search_fields = ('location', 'department', 'section')
-    
-    
-admin.site.register(Location, LocationAdmin)
-admin.site.register(PersonalInformation, PersonalInformationAdmin)    
+class InsuranceInformation(Employee):
+    class Meta:
+        proxy = True
+
+class InsuranceInformationAdmin(admin.ModelAdmin):
+    list_display = ('name_in_arabic', 'name_in_english', 'display_location', 'department', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'expire_date', 'gender', 'date_of_birth', 'place_of_birth')
+    list_filter = ('department__location', 'department__department', 'department__section', 'marital_status', 'religion', 'gender')
+    search_fields = ('name_in_arabic', 'name_in_english', 'department__department', 'department__section', 'job_title_arabic', 'job_title_english', 'marital_status', 'religion', 'national_id', 'place_of_birth')
+
+    def display_location(self, obj):
+        return obj.department.location
+    display_location.short_description = 'Location'
+
+admin.site.register(Department, DepartmentAdmin)
+admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(PersonalInformation, PersonalInformationAdmin)
 admin.site.register(ContactInformation, ContactInformationAdmin)
+admin.site.register(Education, EducationAdmin)
+admin.site.register(InsuranceInformation, InsuranceInformationAdmin)
