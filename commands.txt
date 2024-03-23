@@ -1,5 +1,7 @@
 python -m pip install Pillow
 pip install django-admin-column-toggle
+pip freeze > requirements.txt
+python manage.py collectstatic
 
 python manage.py runserver
 python manage.py makemigrations
