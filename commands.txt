@@ -1,0 +1,7 @@
+python -m pip install Pillow
+pip install django-admin-column-toggle
+
+python manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
