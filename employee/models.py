@@ -1,10 +1,16 @@
 from django.db import models
 
+
 class Department(models.Model):
     department = models.CharField(max_length=100, null=True)
     section = models.CharField(max_length=100, null=True)
     location = models.CharField(max_length=100, null=True)
     department_manager = models.ForeignKey('Employee', on_delete=models.SET_NULL, null=True, related_name='managed_department')
+    def __str__(self):
+        return self.location
+    # meta for ordering
+
+
 
 class Employee(models.Model):
     RELIGION_CHOICES = [
@@ -31,7 +37,7 @@ class Employee(models.Model):
     job_title_english = models.CharField(max_length=100, null=True)
     marital_status = models.CharField(max_length=50, choices=MARITAL_STATUS_CHOICES, null=True)
     religion = models.CharField(max_length=50, choices=RELIGION_CHOICES, null=True)
-    national_id = models.CharField(max_length=50, null=True)
+    national_id = models.CharField(max_length=14, null=True)
     expire_date = models.DateField(null=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True)
     date_of_birth = models.DateField(null=True)
@@ -56,3 +62,6 @@ class Employee(models.Model):
     private_health_insurance = models.BooleanField(null=True)
     previous_insurance_years = models.IntegerField(null=True)
     previous_insurance_months = models.IntegerField(null=True)
+    
+    def __str__(self):
+        return self.name_in_english
